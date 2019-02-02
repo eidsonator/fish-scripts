@@ -1,5 +1,4 @@
-function gitt
-
+function git_version
     set dry false
     set build 
     set type
