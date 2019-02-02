@@ -15,8 +15,6 @@ function gitt
                         # Handle `whatever` here
                         set build $value
                 end
-            case -w
-                echo 'wahtever'
             case d dry
                 set dry true
             case f force
@@ -41,7 +39,7 @@ function gitt
 
     if [ $type = 'patch' ]
         set vpatch (math $vpatch + 1)
-    else if [ type = 'minor' ]
+    else if [ $type = 'minor' ]
         set vminor (math $vminor + 1)
         set vpatch 0
     else if [ $type = 'major' ]
