@@ -1,7 +1,7 @@
 function git_version
     set dry false
-    set build 
-    set type
+    set build ''
+    set type ''
     set force false
     getopts $argv | while read -l key value
         switch $key
@@ -17,10 +17,9 @@ function git_version
             case d dry
                 set dry true
             case f force
-                echo force
                 set force true
             case v version
-                _gitt_print_version
+                _git_print_version
                 return 0
             case \*
                 echo unknown flag $key
@@ -29,7 +28,12 @@ function git_version
         end
     end
 
-    set v (git describe --abbrev=0 --tags)
+    set v (git describe --abbrev=0 --tags 2>/dev/null)
+
+    if [ $status != 0 ]
+        set v '0.0.0'
+    end
+
     # strip any thing from the hyphen after to remove -alpha or -beta
     set v (string split "-" -- $v)[1]
     set vmajor (string split "." -- $v)[1]
@@ -46,9 +50,8 @@ function git_version
         set vpatch 0
         set vminor 0        
     else
-        echo "Help"
-        echo "Accepts 'major', 'minor', or 'patch' as the first command line argument"
-        
+        echo $v
+
         return 0
     end
 
@@ -82,6 +85,6 @@ function git_version
     end
 end
 
-function _gitt_print_version
-    echo gitt verison increment 1.0.0
+function _git_print_version
+    echo git verison bump 1.2.0
 end
